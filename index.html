@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h1>Chatbot</h1>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Chat messages will be added here -->
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById("chat-messages");
+        const userInput = document.getElementById("user-input");
+        const sendButton = document.getElementById("send-button");
+
+        // Function to add a user message to the chat interface
+        function addUserMessage(message) {
+            const userMessage = document.createElement("div");
+            userMessage.className = "user-message";
+            userMessage.textContent = message;
+            chatMessages.appendChild(userMessage);
+        }
+
+        // Function to add a chatbot message to the chat interface
+        function addChatbotMessage(message, isCustom = false) {
+            const chatbotMessage = document.createElement("div");
+            chatbotMessage.className = "chatbot-message";
+            chatbotMessage.textContent = message;
+            if (isCustom) {
+                chatbotMessage.classList.add("custom-chatbot-message");
+            }
+            chatMessages.appendChild(chatbotMessage);
+        }
+
+        // Function to handle user input and chatbot responses
+        function handleUserInput() {
+            const userMessage = userInput.value;
+            if (userMessage.trim() === "") return;
+
+            addUserMessage(userMessage);
+            userInput.value = "";
+
+            const chatbotMessage = chatbotResponse(userMessage);
+            addChatbotMessage(chatbotMessage);
+
+            // Scroll to the latest message
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Function to provide information based on user input
+        function chatbotResponse(userInput) {
+            userInput = userInput.toLowerCase();
+
+            if (userInput.includes("hello")) {
+                return "Hello! How can I assist you?";
+            } else if (userInput.includes("help")) {
+                return "Sure, I can help you with that.";
+            } else if (userInput.includes("food")) {
+                return "I love talking about food! What's your favorite cuisine?";
+            } else if (userInput.includes("cars")) {
+                return "Cars are fascinating. Do you have a favorite car brand?";
+            } else if (userInput.includes("weather")) {
+                return "I can provide you with the current weather information. Please specify your location.";
+            } else if (userInput.includes("joke")) {
+                return "Why did the scarecrow win an award? Because he was outstanding in his field!";
+            } else if (userInput.includes("news")) {
+                return "The latest news is that the weather is lovely today.";
+            } else if (userInput.includes("music")) {
+                return "What type of music do you like? I can recommend some songs.";
+            } else if (userInput.includes("movie")) {
+                return "Do you have a favorite movie genre?";
+            } else {
+                return "I'm here to provide information. Please ask about a specific topic, and I'll do my best to assist you.";
+            }
+        }
+
+        // Event listener for sending a message
+        sendButton.addEventListener("click", handleUserInput);
+
+        // Event listener for pressing Enter key
+        userInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                handleUserInput();
+            }
+        });
+    </script>
+</body>
+</html>
